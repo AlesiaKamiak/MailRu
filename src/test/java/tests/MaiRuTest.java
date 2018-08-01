@@ -34,4 +34,9 @@ public class MaiRuTest {
 
 	}
 
+	@AfterTest
+	public void stopBrowser() {
+		steps.closeDriver();
+	}
+
 }
