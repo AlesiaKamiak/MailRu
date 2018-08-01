@@ -1,49 +1,35 @@
 package driver;
 
-import org.openqa.selenium.By;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class DriverSingleton {
 	private static final String CHROME = "webdriver.chrome.driver";
 	private static final String CHROME_PATH = "e:\\driver\\chromedriver.exe";
-	private static DriverSingleton instance = null;
+
+//	private static DriverSingleton instance = null;
 	private static WebDriver driver = null;
 
-	static {
-		instance = new DriverSingleton();
-		initWebDriver();
+	
+	public static WebDriver getDriver() {
+		if (null == driver) {
+			System.setProperty(CHROME, CHROME_PATH);
+			driver = new ChromeDriver();
+			driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			driver.manage().window().maximize();
+			System.out.println("Browser started");
+		}
+
+		return driver;
 	}
 
-	private DriverSingleton() {
-
-	}
-
-	private static void initWebDriver() {
-		System.setProperty(CHROME, CHROME_PATH);
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-	}
-
-	public static void stopWebDriver() {
-		driver.close();
+	public static void closeDriver() {
+		driver.quit();
 		driver = null;
 	}
 
-	public static DriverSingleton getInstance() { // this is better
-		return instance;
-	}
-
-	public void openPage(String url) {
-		driver.get(url);
-	}
-	
-	public WebElement findByName(String elementName) {
-		return driver.findElement(By.name(elementName));
-	}
-	public WebElement findByExpath(String xpathExpression) {
-		return driver.findElement(By.xpath(xpathExpression));
-	}
 
 }

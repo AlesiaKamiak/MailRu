@@ -6,12 +6,12 @@ import driver.DriverSingleton;
 
 public abstract class AbstractPageMailRu  {
 
-	protected static DriverSingleton driver;
+	protected static WebDriver driver;
 	
 	public abstract void openPage();
 
-	public AbstractPageMailRu(DriverSingleton driver) {
-		this.driver =(DriverSingleton) driver;
+	public AbstractPageMailRu(WebDriver driver) {
+		this.driver = driver;
 	}
 	
 	
